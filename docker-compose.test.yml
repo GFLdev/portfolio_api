@@ -1,0 +1,17 @@
+services:
+  portfolio-api:
+    image: golang:1.25
+    container_name: portfolio-api-test
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      APP_NAME: ${APP_NAME}
+      GO_ENV: testing
+      GO_PORT: ${GO_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    command: ["sh", "-c", "go test -coverprofile=coverage.out ./..."]

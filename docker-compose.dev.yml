@@ -1,0 +1,25 @@
+services:
+  portfolio-api:
+    build:
+      context: ../../
+      dockerfile: Dockerfile
+    container_name: portfolio-api-dev
+    environment:
+      APP_NAME: ${APP_NAME}
+      GO_ENV: development
+      GO_PORT: ${GO_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${GO_PORT}:${GO_PORT}"
+    volumes:
+      - ../../configs:/app/configs:z
+    healthcheck:
+      test:
+        ["CMD", "curl", "-X", "OPTIONS", "-f", "http://localhost:${GO_PORT}"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
